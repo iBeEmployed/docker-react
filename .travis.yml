@@ -1,4 +1,4 @@
-language: node_js
+sudo: required
 
 services:
     - docker
@@ -8,3 +8,16 @@ before_install:
 
 script:
     - docker run -e CI=true portinthestorm/docker-react npm run test
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-west-2"
+    app: "docker-react"
+    env: "DockerReact-env"
+    bucket_name: "elasticbeanstalk-us-west-2-366554480919"
+    bucket_path: "docker-react"
+    on:
+        branch: master
+
+# access_key_id: $AWS_ACCESS_KEY
+# secret_access_key: $AWS_SECRET_KEY
